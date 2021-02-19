@@ -24,7 +24,7 @@ glm::vec3 ce::Camera::getRight() {
 }
 
 void ce::Camera::sendToShader(ce::Shader* shader) {
-	shader->setMat4("transform.view", getView());
+	shader->setUniform("transform.view", getView());
 }
 
 void ce::Camera::boundPitch() {

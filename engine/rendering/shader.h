@@ -25,11 +25,29 @@ namespace ce {
 		int registerAttribute(std::string name),
 			registerUniform(std::string name);
 
+		void
+		setUniform(GLuint location, bool value),
+			setUniform(GLuint location, int value),
+			setUniform(GLuint location, float value),
+
+			setUniform(GLuint location, vec2 value),
+			setUniform(GLuint location, float x, float y),
+
+			setUniform(GLuint location, vec3 value),
+			setUniform(GLuint location, float x, float y, float z),
+
+			setUniform(GLuint location, vec4 value),
+			setUniform(GLuint location, float x, float y, float z, float w),
+
+			setUniform(GLuint location, mat2 mat),
+			setUniform(GLuint location, mat3 mat),
+			setUniform(GLuint location, mat4 mat);
+
 	 public:
 		Shader(const char* name, std::map<std::string, std::string> options = {})
-			: Shader(name, name, name, options) {};
+			: Shader(name, name, name, options){};
 		Shader(const char* vertName, const char* fragName, std::map<std::string, std::string> options = {})
-			: Shader(vertName, NULL, fragName, options) {};
+			: Shader(vertName, NULL, fragName, options){};
 		Shader(const char* vertName, const char* geoName, const char* fragName, std::map<std::string, std::string> options = {});
 		~Shader();
 
@@ -39,23 +57,20 @@ namespace ce {
 			getUniformLocation(const std::string name);
 
 		void vertexAttribPointer(std::string attrib, GLint size, GLenum type,
-			GLboolean normalized, GLsizei stride, const void*pointer),
+			GLboolean normalized, GLsizei stride, const void* pointer);
 
-			setBool(const std::string name, bool value),
-			setInt(const std::string name, int value),
-			setFloat(const std::string name, float value),
-
-			setVec2(const std::string name, vec2 value),
-			setVec2(const std::string name, float x, float y),
-
-			setVec3(const std::string name, vec3 value),
-			setVec3(const std::string name, float x, float y, float z),
-
-			setVec4(const std::string name, vec4 value),
-			setVec4(const std::string name, float x, float y, float z, float w),
-
-			setMat2(const std::string name, mat2 mat),
-			setMat3(const std::string name, mat3 mat),
-			setMat4(const std::string name, mat4 mat);
+		template <class U>
+		void setUniform(const std::string name, U value) {
+			bind();
+			GLuint location = getUniformLocation(name);
+			if (location < (GLuint)Shader::MIN_LOC)
+				return;
+			setUniform(location, value);
+			unbind();
+		};
+		void
+		setUniform(const std::string name, float x, float y),
+			setUniform(const std::string name, float x, float y, float z),
+			setUniform(const std::string name, float x, float y, float z, float w);
 	};
 }

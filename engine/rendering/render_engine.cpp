@@ -16,7 +16,7 @@ void ce::RenderEngine::bind(RenderCommand command) {
 	// TODO: get rid of unneccecary binding
 	command.mesh->sendToShader(command.material->getShader());
 	command.transform->sendToShader(command.material->getShader());
-	command.material->getShader()->setMat4("transform.proj", getProjection());
+	command.material->getShader()->setUniform("transform.proj", getProjection());
 	m_camera->sendToShader(command.material->getShader());
 
 	// Bind Things

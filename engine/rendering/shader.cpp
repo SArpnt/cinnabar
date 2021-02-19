@@ -174,114 +174,68 @@ void ce::Shader::vertexAttribPointer(std::string attrib, GLint size,
 	glEnableVertexAttribArray(location);
 }
 
-void ce::Shader::setBool(const std::string name, bool value) {
+void ce::Shader::setUniform(const std::string name, float x, float y) {
 	bind();
 	GLuint location = getUniformLocation(name);
 	if (location < (GLuint)Shader::MIN_LOC)
 		return;
+	setUniform(location, x, y);
+	unbind();
+}
+void ce::Shader::setUniform(const std::string name, float x, float y, float z) {
+	bind();
+	GLuint location = getUniformLocation(name);
+	if (location < (GLuint)Shader::MIN_LOC)
+		return;
+	setUniform(location, x, y, z);
+	unbind();
+}
+void ce::Shader::setUniform(const std::string name, float x, float y, float z, float w) {
+	bind();
+	GLuint location = getUniformLocation(name);
+	if (location < (GLuint)Shader::MIN_LOC)
+		return;
+	setUniform(location, x, y, z, w);
+	unbind();
+}
+
+void ce::Shader::setUniform(GLuint location, bool value) {
 	glUniform1i(location, (int)value);
-	unbind();
 }
-
-void ce::Shader::setInt(const std::string name, int value) {
-	bind();
-	GLuint location = getUniformLocation(name);
-	if (location < (GLuint)Shader::MIN_LOC)
-		return;
+void ce::Shader::setUniform(GLuint location, int value) {
 	glUniform1i(location, value);
-	unbind();
+}
+void ce::Shader::setUniform(GLuint location, float value) {
+	glUniform1f(location, value);
 }
 
-void ce::Shader::setFloat(const std::string name, float value) {
-	bind();
-	GLuint location = getUniformLocation(name);
-	if (location < (GLuint)Shader::MIN_LOC)
-		return;
-	glUniform1f(location, value);
-	unbind();
-}
-// ------------------------------------------------------------------------
-void ce::Shader::setVec2(const std::string name, vec2 value) {
-	bind();
-	GLuint location = getUniformLocation(name);
-	if (location < (GLuint)Shader::MIN_LOC)
-		return;
+void ce::Shader::setUniform(GLuint location, vec2 value) {
 	glUniform2fv(location, 1, &value[0]);
-	unbind();
 }
-void ce::Shader::setVec2(const std::string name, float x, float y) {
-	bind();
-	GLuint location = getUniformLocation(name);
-	if (location < (GLuint)Shader::MIN_LOC)
-		return;
+void ce::Shader::setUniform(GLuint location, float x, float y) {
 	glUniform2f(location, x, y);
-	// storageLog("uniform", name, &x, &y);
-	unbind();
 }
-void ce::Shader::setVec3(const std::string name, vec3 value) {
-	bind();
-	GLuint location = getUniformLocation(name);
-	if (location < (GLuint)Shader::MIN_LOC)
-		return;
+
+void ce::Shader::setUniform(GLuint location, vec3 value) {
 	glUniform3fv(location, 1, &value[0]);
-	unbind();
 }
-void ce::Shader::setVec3(const std::string name, float x, float y, float z) {
-	bind();
-	GLuint location = getUniformLocation(name);
-	if (location < (GLuint)Shader::MIN_LOC)
-		return;
+void ce::Shader::setUniform(GLuint location, float x, float y, float z) {
 	glUniform3f(location, x, y, z);
-	// storageLog("uniform", name, &x, &y, &z);
-	unbind();
 }
-// ------------------------------------------------------------------------
-void ce::Shader::setVec4(const std::string name, vec4 value) {
-	bind();
-	GLuint location = getUniformLocation(name);
-	if (location < (GLuint)Shader::MIN_LOC)
-		return;
+
+void ce::Shader::setUniform(GLuint location, vec4 value) {
 	glUniform4fv(location, 1, &value[0]);
-	// storageLog("uniform", name, &value[0]);
-	unbind();
 }
-void ce::Shader::setVec4(
-	const std::string name, float x, float y, float z, float w) {
-	bind();
-	GLuint location = getUniformLocation(name);
-	if (location < (GLuint)Shader::MIN_LOC)
-		return;
+void ce::Shader::setUniform(GLuint location, float x, float y, float z, float w) {
 	glUniform4f(location, x, y, z, w);
-	// storageLog("uniform", name, &x, &y, &z, &w);
-	unbind();
 }
-// ------------------------------------------------------------------------
-void ce::Shader::setMat2(const std::string name, mat2 mat) {
-	bind();
-	GLuint location = getUniformLocation(name);
-	if (location < (GLuint)Shader::MIN_LOC)
-		return;
-	glUniformMatrix2fv(location, 1, GL_FALSE, &mat[0][0]);
-	// storageLog("uniform", name, &mat[0][0]);
-	unbind();
+
+void ce::Shader::setUniform(GLuint location, mat2 value) {
+	glUniformMatrix2fv(location, 1, GL_FALSE, &value[0][0]);
 }
-// ------------------------------------------------------------------------
-void ce::Shader::setMat3(const std::string name, mat3 mat) {
-	bind();
-	GLuint location = getUniformLocation(name);
-	if (location < (GLuint)Shader::MIN_LOC)
-		return;
-	glUniformMatrix3fv(location, 1, GL_FALSE, &mat[0][0]);
-	// storageLog("uniform", name, &mat[0][0]);
-	unbind();
+void ce::Shader::setUniform(GLuint location, mat3 value) {
+	glUniformMatrix3fv(location, 1, GL_FALSE, &value[0][0]);
 }
-// ------------------------------------------------------------------------
-void ce::Shader::setMat4(const std::string name, mat4 mat) {
-	bind();
-	GLuint location = getUniformLocation(name);
-	if (location < (GLuint)Shader::MIN_LOC)
-		return;
-	glUniformMatrix4fv(location, 1, GL_FALSE, &mat[0][0]);
-	// storageLog("uniform", name, &mat[0][0]);
-	unbind();
+void ce::Shader::setUniform(GLuint location, mat4 value) {
+	glUniformMatrix4fv(location, 1, GL_FALSE, &value[0][0]);
 }
