@@ -1,15 +1,12 @@
-#ifndef _CE_CAMERA_H_
-#define _CE_CAMERA_H_
-
+#pragma once
 #include <math/transform.h>
 
 namespace ce {
 	class Camera {
 	 private:
 		ce::Transform* m_transform;
-		float
-			speed,
-			fov;
+		double speed;
+		float fov;
 
 	 public:
 		Camera();
@@ -22,5 +19,3 @@ namespace ce {
 		void boundPitch();
 	};
 }
-
-#endif //_CE_CAMERA_H_

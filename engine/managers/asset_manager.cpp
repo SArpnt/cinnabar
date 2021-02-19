@@ -97,12 +97,13 @@ ce::MeshFile ce::AssetManager::getMeshFile(std::string filename) {
 			auto position = *(mesh->mVertices + i);
 			auto texCoord = glm::vec2(0.f, 0.f);        //**(mesh->mTextureCoords + i);
 			auto color = glm::vec4(1.f, 1.f, 1.f, 1.f); //**(mesh->mColors + i);
-			Vertex vertex = {glm::vec3(position.x, position.y, position.z), glm::vec4(color.r, color.g, color.b, color.a), glm::vec2(texCoord.x, texCoord.y)};
-			file.vertices.push_back(vertex);
+			file.vertPos.push_back(glm::vec3(position.x, position.y, position.z));
+			file.vertUV.push_back(glm::vec2(texCoord.x, texCoord.y));
+			file.vertCol.push_back(glm::vec4(color.r, color.g, color.b, color.a));
 		}
 		for (int i = 0; i < mesh->mNumFaces; i++) {
 			auto face = *(mesh->mFaces + i);
-			//TODO: Support Normals
+			// TODO: Support Normals
 			//auto normal = *(mesh->mNormals + i);
 			for (int j = 0; j < face.mNumIndices; j++) {
 				file.indices.push_back(*(face.mIndices + i));

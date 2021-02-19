@@ -77,7 +77,7 @@ void ce::RenderEngine::render() {
 	for (int i = 0; i < m_commands.size(); i++) {
 		RenderCommand command = m_commands[i];
 		bind(command);
-		render(command.points);
+		render(command.mesh->GetIndexCount());
 		unbind(command); // TODO: should this go outside the for loop?
 	}
 	m_commands.clear();

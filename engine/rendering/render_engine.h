@@ -12,7 +12,6 @@ namespace ce {
 		Transform* transform;
 		Material* material;
 		Mesh* mesh;
-		unsigned points;
 	};
 
 	class RenderEngine {

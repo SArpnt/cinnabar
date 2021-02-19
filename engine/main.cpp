@@ -25,25 +25,38 @@
  * Vertices
  */
 // clang-format off
-ce::Vertex cubeVerts[] = {
-	// Position                     Color                              Texture coord
-	glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 0.0f),// 0
-	glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 1.0f),// 1
-	glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 0.0f),// 4
-	glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 1.0f),// 5
-	
-	glm::vec3( 0.5f, -0.5f, -0.5f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 0.0f),// 6
-	glm::vec3( 0.5f, -0.5f,  0.5f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 1.0f),// 7
-	glm::vec3( 0.5f,  0.5f, -0.5f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 0.0f),// 2
-	glm::vec3( 0.5f,  0.5f,  0.5f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 1.0f),// 3
+glm::vec3 cubePos[] = {
+	glm::vec3(-0.5f, -0.5f, -0.5f),
+	glm::vec3(-0.5f, -0.5f,  0.5f),
+	glm::vec3(-0.5f,  0.5f, -0.5f),
+	glm::vec3(-0.5f,  0.5f,  0.5f),
+	glm::vec3( 0.5f, -0.5f, -0.5f),
+	glm::vec3( 0.5f, -0.5f,  0.5f),
+	glm::vec3( 0.5f,  0.5f, -0.5f),
+	glm::vec3( 0.5f,  0.5f,  0.5f),
 };
-ce::Vertex planeVerts[] = {
-	// Position                     Color                              Texture coord
-	glm::vec3(-1.0f,  0.0f, -1.0f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f), glm::vec2(0.0f, 0.0f),// 0
-	glm::vec3(-1.0f,  0.0f,  1.0f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f), glm::vec2(0.0f, 1.0f),// 1
-	glm::vec3( 1.0f,  0.0f, -1.0f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f), glm::vec2(1.0f, 0.0f),// 2
-	glm::vec3( 1.0f,  0.0f,  1.0f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f), glm::vec2(1.0f, 1.0f),// 3
+glm::vec2 cubeUV[] = {
+	glm::vec2(0.0f, 0.0f),
+	glm::vec2(0.0f, 1.0f),
+	glm::vec2(1.0f, 0.0f),
+	glm::vec2(1.0f, 1.0f),
 };
+
+glm::vec3 planePos[] = {
+	glm::vec3(-1.0f,  0.0f, -1.0f),
+	glm::vec3(-1.0f,  0.0f,  1.0f),
+	glm::vec3( 1.0f,  0.0f, -1.0f),
+	glm::vec3( 1.0f,  0.0f,  1.0f),
+};
+glm::vec4 planeCol[] = {
+	glm::vec4(0.0f, 1.0f, 0.0f, 1.0f),
+};
+// clang-format on
+
+unsigned cubePosCount = sizeof(cubePos) / sizeof(glm::vec3);
+unsigned cubeUVCount = sizeof(cubeUV) / sizeof(glm::vec2);
+unsigned planePosCount = sizeof(planePos) / sizeof(glm::vec3);
+unsigned planeColCount = sizeof(planeCol) / sizeof(glm::vec4);
 
 /*
  * this is a cube
@@ -53,9 +66,6 @@ ce::Vertex planeVerts[] = {
 	1-5/
 	viewed from the front, bottom face here is front
 */
-// clang-format on
-unsigned cubeVertCount = sizeof(cubeVerts) / sizeof(ce::Vertex);
-unsigned planeVertCount = sizeof(planeVerts) / sizeof(ce::Vertex);
 // 7<=>5
 // clang-format off
 GLuint cubeIndices [] = {
@@ -80,8 +90,8 @@ GLuint cubeIndices [] = {
 };
 
 GLuint planeIndices[] = {
-	0, 1, 3,
-	0, 3, 2,
+	0,0,0, 1,0,1, 3,0,3,
+	0,0,0, 3,0,3, 2,0,2,
 };
 // clang-format on
 unsigned cubeIndexCount = sizeof(cubeIndices) / sizeof(GLuint);
@@ -102,24 +112,32 @@ int main(int argc, char* argv[]) {
 	renderEngine->setClipRange(0.1f, 100.0f);
 
 	// Cube
-	ce::Mesh* cubeMesh = new ce::Mesh(cubeVerts, cubeVertCount, cubeIndices, cubeIndexCount);
+	ce::Mesh* cubeMesh = new ce::Mesh(
+		cubePos, cubePosCount,
+		cubeUV, cubeUVCount,
+		NULL, 0,
+		cubeIndices, cubeIndexCount);
 	ce::Transform* cubePos = new ce::Transform();
 	ce::Material* cubeMaterial = new ce::Material("basic");
 	cubeMaterial->setTexture("uv-map.png");
 
 	// Plane
-	ce::Mesh* planeMesh = new ce::Mesh(planeVerts, planeVertCount, planeIndices, planeIndexCount);
+	ce::Mesh* planeMesh = new ce::Mesh(
+		planePos, planePosCount,
+		NULL, 0,
+		planeCol, planeColCount,
+		planeIndices, planeIndexCount);
 	ce::Transform* planePos = new ce::Transform();
 	ce::Material* planeMaterial = new ce::Material("vertColor");
 	planePos->setPosition(0.0f, -1.0f, 0.0f);
 	planePos->scale(10.0f, 1.0f, 10.0f);
-	
+
 	ce::Mesh* blenderMesh = new ce::Mesh("hello.obj");
 	ce::Transform* blenderPos = new ce::Transform();
 	ce::Material* blenderMaterial = new ce::Material("vertColor");
 	blenderPos->setPosition(0.0f, 2.0f, 0.0f);
 
-	float mouseSens = 0.1f;
+	double mouseSens = 0.1f;
 	ce::Camera* camera = new ce::Camera();
 	// TODO: Seperate so i can put in a player class later
 	glm::vec3 cameraVelocity(0.0f);
@@ -151,7 +169,7 @@ int main(int argc, char* argv[]) {
 					break;
 				}
 				case SDL_KEYDOWN: {
-					float cameraSpeed = 2.5f * time->getDeltaTime();
+					double cameraSpeed = 2.5f * time->getDeltaTime();
 					if (event.key.keysym.sym == SDLK_w)
 						cameraVelocity.z = cameraSpeed;
 					else if (event.key.keysym.sym == SDLK_s)
@@ -209,9 +227,12 @@ int main(int argc, char* argv[]) {
 			(cameraUp * cameraVelocity.y));
 
 		// Render
-		renderEngine->registerCommand({cubePos, cubeMaterial, cubeMesh, cubeMesh->GetIndexCount()});
-		renderEngine->registerCommand({planePos, planeMaterial, planeMesh, planeMesh->GetIndexCount()});
-		renderEngine->registerCommand({blenderPos, blenderMaterial, blenderMesh, blenderMesh->GetIndexCount()});
+		for (int i = 0; i < 100; i++) {
+			cubePos->setPosition(i, 0, 0);
+			renderEngine->registerCommand({cubePos, cubeMaterial, cubeMesh});
+		}
+		renderEngine->registerCommand({planePos, planeMaterial, planeMesh});
+		renderEngine->registerCommand({blenderPos, blenderMaterial, blenderMesh});
 		renderEngine->render();
 
 		window->swapBuffers();

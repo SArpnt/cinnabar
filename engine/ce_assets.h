@@ -2,7 +2,6 @@
 
 #include <ce_math.h>
 
-#include "rendering/vertex.h"
 #include <string>
 #include <vector>
 
@@ -38,7 +37,9 @@ namespace ce {
 	};
 
 	struct MeshFile : public File {
-		std::vector<Vertex> vertices;
+		std::vector<glm::vec3> vertPos;
+		std::vector<glm::vec2> vertUV;
+		std::vector<glm::vec4> vertCol;
 		std::vector<unsigned> indices;
 		std::vector<const char*> textures;
 	};

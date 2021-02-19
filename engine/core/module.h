@@ -8,7 +8,7 @@ namespace ce {
 	class Module {
 	 private:
 	 public:
-		virtual void tick(float deltaTime) = 0;
+		virtual void tick(double deltaTime) = 0;
 	};
 	typedef Module* init_module_t();
 	typedef void delete_module_t(Module*);

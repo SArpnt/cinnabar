@@ -7,10 +7,9 @@ namespace ce {
 	class Transform {
 	 private:
 		/*
-		 * Pitch:X
-		 * Yaw:Y
+		 * Pitch: X
+		 * Yaw: Y
 		 * Roll: Z
-		 *
 		 */
 		glm::vec3 m_pos, m_rot, m_scale;
 
