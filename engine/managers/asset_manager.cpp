@@ -90,7 +90,7 @@ ce::MeshFile ce::AssetManager::getMeshFile(std::string filename) {
 	}
 	MeshFile file;
 	file.name = filename;
-	for (int i = 0; i < 1 /*scene->mNumMeshes*/; i++) {
+	for (int i = 0; i < scene->mNumMeshes; i++) {
 		auto mesh = *(scene->mMeshes + i);
 		LOG_INFO("Loading Mesh " + path + " (V:I):" + std::to_string(mesh->mNumVertices) + ":" + std::to_string(mesh->mNumFaces));
 		for (int i = 0; i < mesh->mNumVertices; i++) {
@@ -106,7 +106,7 @@ ce::MeshFile ce::AssetManager::getMeshFile(std::string filename) {
 			// TODO: Support Normals
 			//auto normal = *(mesh->mNormals + i);
 			for (int j = 0; j < face.mNumIndices; j++) {
-				file.indices.push_back(*(face.mIndices + i));
+				file.indices.push_back(face.mIndices[j]);
 			}
 		}
 	}

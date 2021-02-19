@@ -132,12 +132,11 @@ int main(int argc, char* argv[]) {
 	planePos->setPosition(0.0f, -1.0f, 0.0f);
 	planePos->scale(10.0f, 1.0f, 10.0f);
 
-	ce::Mesh* blenderMesh = new ce::Mesh("hello.obj");
+	ce::Mesh* blenderMesh = new ce::Mesh("blob.obj");
 	ce::Transform* blenderPos = new ce::Transform();
 	ce::Material* blenderMaterial = new ce::Material("vertColor");
-	blenderPos->setPosition(0.0f, 2.0f, 0.0f);
 
-	double mouseSens = 0.1f;
+	double mouseSens = 0.25f;
 	ce::Camera* camera = new ce::Camera();
 	// TODO: Seperate so i can put in a player class later
 	glm::vec3 cameraVelocity(0.0f);
